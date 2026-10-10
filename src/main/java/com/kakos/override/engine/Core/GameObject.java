@@ -68,6 +68,13 @@ public class GameObject {
         DisplayManager.addToStack(this);
     }
 
+public void changeListener(String key,String value){
+LuaTable data = new LuaTable();
+data.set("key",key);
+data.set("value",value);
+events.callEventToObject(this,"changed",data);
+}
+
     public int getLayer() {
         return this.layer;
     }
