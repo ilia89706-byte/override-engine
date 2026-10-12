@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://sonatype.org/content/repositories/releases/" }
+    maven { url "https://jitpack.io" }
+}
+
+android {
+    namespace = "com.kakos.override"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.kakos.override"
+        minSdk 19 
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+    }
+
+        compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['../core/main/resources'] 
+        }
+    }
+
+    packaging {
+        resources {
+            excludes += [
+                'META-INF/**'
+            ]
+        }
+    }
+}
+
+dependencies {
+    implementation project(':core')
+
+    implementation "androidx.multidex:multidex:2.0.1"
+    
+    implementation "com.badlogicgames.gdx:gdx-backend-android:1.13.1"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.13.1:natives-armeabi-v7a"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.13.1:natives-arm64-v8a"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.13.1:natives-x86"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.13.1:natives-x86_64"
+
+    implementation "com.badlogicgames.gdx:gdx-freetype-platform:1.13.1:natives-armeabi-v7a"
+    implementation "com.badlogicgames.gdx:gdx-freetype-platform:1.13.1:natives-arm64-v8a"
+    implementation "com.badlogicgames.gdx:gdx-freetype-platform:1.13.1:natives-x86"
+    implementation "com.badlogicgames.gdx:gdx-freetype-platform:1.13.1:natives-x86_64"
+
+    implementation "com.badlogicgames.gdx-video:gdx-video-android:1.3.3"
+}
