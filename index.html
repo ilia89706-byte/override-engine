@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя Lua-Игра</title>
+    
+    <script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+    }
+    
+    #loader-container {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: #111; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-family: sans-serif;
+        z-index: 9999; 
+        transition: opacity 0.5s ease;
+    }
+    
+    .bouncing-logo {
+        max-width: 150px; 
+        height: auto;
+        margin-bottom: 25px;
+        animation: realBounce 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate;
+        transform-origin: bottom center;
+    }
+
+    @keyframes realBounce {
+        0% { transform: scaleY(0.7) scaleX(1.2) translateY(0); }
+        10% { transform: scaleY(1) scaleX(1) translateY(0); }
+        100% { transform: scaleY(1.05) scaleX(0.95) translateY(-80px); }
+    }
+
+    h2 { margin: 0 0 5px 0; font-weight: 400; }
+    .progress-bar-container {
+        width: 250px;
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .progress-bar-fill {
+        width: 0%; 
+        height: 100%;
+        background: linear-gradient(90deg, #00beff, #0077ff);
+        border-radius: 4px;
+        transition: width 0.1s linear; 
+    }
+
+  
+    #progress-text { margin: 0; color: #888; font-size: 14px; }
+
+        #error-details {
+        margin-top: 15px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.4);
+        border-left: 4px solid #ff3333;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 12px;
+        color: #ffaaaa;
+        max-width: 500px;
+        width: 100%;
+        white-space: pre-wrap;
+        display: none;
+        text-align: left;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+</style>
+</head>
+<body>
+
+
+<div id="loader-container">
+    <img id="logo-img" class="bouncing-logo" src="1.png" alt="Загрузка движка Override">
+    <h2 id="loader-status">Подключение к серверу...</h2>
+    
+    <div id="p-container" class="progress-bar-container">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+    </div>
+    
+    <p id="progress-text">0%</p>
+    <div id="error-details"></div>
+</div>
+
+
+<script>
+    (async function() {
+        await cheerpjInit({ 
+            version: 17,
+            root: "/app/cheerpj/" 
+        });
+        
+        cheerpjCreateDisplay(1024, 768); 
+        
+        await cheerpjRunJar("/app/OVERRIDE.jar");
+        
+        const loader = document.getElementById("loader-container");
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 500);
+    })();
+</script>
+
+</body>
+</html>
